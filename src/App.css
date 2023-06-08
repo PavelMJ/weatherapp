@@ -6,7 +6,7 @@
 	min-height: 400px;
 }
 
-.App-header, .nav-btns,.input-panel{
+.App-header, .nav-btns,.input-panel, .city, .data{
 	display: flex;
 	flex-direction: row;
 }
@@ -43,6 +43,16 @@
 .search-input{
 
 }
+
+.add-to-favorite{
+
+}
+
+.wether-info{
+
+}
+
+
 
 
 
