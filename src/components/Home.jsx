@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
+import WeatherInfo from './WeatherInfo'
 
-export default function Home({ currentData, fiveDaysData, getCityName }) {
+
+export default function Home({ currentData, fiveDaysData, getCityName,status, changeStatus }) {
 	const [name, setName] = useState('')
+
 
 	return (
 		<div className='Home'>
@@ -12,25 +15,24 @@ export default function Home({ currentData, fiveDaysData, getCityName }) {
 					setName('')
 				}} >Search</button>
 			</div>
-			<div className='city'>
-				<div className='wether-info'>
-					<div className='data'>
-						<div className='temperature'>{currentData.Temperature} C	&deg;</div>
-						<img src="img/cloud_sun_sunny_weather_icon.svg" alt="info-icon" />
-						<div className='info'>{currentData.WeatherText}</div>
-					</div>
 
-					<div className='name-of-city'>{currentData.cityName}</div>
-				</div>
-				<button className='add-to-favorite'>add to favorite</button>
+			<div className='MainInfo'>
+				<WeatherInfo currentData={currentData} />
+				<button className='add-to-favorite' onClick={()=>{
+					changeStatus()
+					}}>{status}</button>
 			</div>
 			<div className='forcasts'>
-				{fiveDaysData.map((day)=>{
-					return <div className='day'></div>
+				{fiveDaysData.map((day) => {
+					return <div className='day'>
+						<div className='day-conditions'>
+							<div className='day-temp'>{`${day.temperature.toFixed(2)} ${day.unit}`}&deg;</div>
+							<img src="img/cloud_sun_sunny_weather_icon.svg" alt="" width={'30px'} height={'auto'} />
+						</div>
+						<div className='day-of-week'>{day.day}</div>
+					</div>
 				})}
 			</div>
-
-
 		</div>
 	)
 }

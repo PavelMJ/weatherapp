@@ -18,6 +18,31 @@ function App() {
 	console.log(currentData);
 	console.log(fiveDaysData);
 
+	const [favorites, setFavorites]=useState([])
+	const [status, setStatus]=useState('Add to Favorites')
+	const [refresh, setRefresh]=useState(true)
+	console.log(favorites);
+	const showFavorites=()=>{
+		setRefresh(!refresh)
+	}
+
+
+
+
+	const changeStatus=()=>{
+		if(favorites.includes(currentData.ID)){
+			setStatus("Add to Favorites")
+			const filtred = favorites.filter(val => val != currentData.ID)
+			setFavorites([...filtred])
+			
+		}
+		else{
+			setStatus("Remove from Favorites")
+			setFavorites([...favorites, currentData.ID])
+			
+		}
+	}
+
 	const builForcast = (data) => {
 		return data.DailyForecasts.map((details) => {
 			return {
@@ -30,8 +55,21 @@ function App() {
 	}
 
 	const getCityName = (name)=>{
-		
+		setCity(name)
 	}
+
+	useEffect(()=>{
+		const data =localStorage.getItem('favoritData')
+		if(data){
+			const favoritData = JSON.parse(data)
+			setFavorites([...favoritData])
+		}
+	},[])
+
+	useEffect(()=>{
+		const favoritData = JSON.stringify(favorites)
+			localStorage.setItem('favoritData',favoritData)
+	},[favorites])
 
 
 
@@ -41,7 +79,8 @@ function App() {
 			.then(data => {
 				setCityKey(prev => prev = data[0].Key)
 
-				const cityName = data[0].AdministrativeArea.LocalizedName
+				const cityName = data[0].LocalizedName
+				
 
 				fetch(`http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${KEY}`)
 					.then(res => res.json())
@@ -49,6 +88,7 @@ function App() {
 
 						if (data) {
 							let current = {
+								ID: cityKey,
 								cityName,
 								WeatherText: data[0].WeatherText,
 								IsDayTime: data[0].IsDayTime,
@@ -95,10 +135,20 @@ function App() {
 	return (
 		<div className='App'>
 			<BrowserRouter>
-				<Header />
+				<Header showFavorites={showFavorites} />
 				<Routes>
-					<Route path='/' element={<Home currentData={currentData} fiveDaysData={fiveDaysData}/>} />
-					<Route path='/favorites' element={<Favorites />} />
+					<Route path='/' element={<Home
+					 currentData={currentData}
+					  fiveDaysData={fiveDaysData}
+						 getCityName={getCityName}
+						 status={status}
+						 changeStatus={changeStatus}
+						 />} />
+					<Route path='/favorites' element={<Favorites
+					favorites={favorites}
+					refresh={refresh}
+					cityKey={cityKey}
+					 />} />
 				</Routes>
 			</BrowserRouter>
 		</div>

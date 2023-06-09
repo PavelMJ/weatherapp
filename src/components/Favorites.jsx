@@ -1,7 +1,13 @@
 import React from 'react'
 
-export default function Favorites() {
+export default function Favorites({favorites, refresh}) {
 	return (
-		<div>Favorites</div>
+
+		<div className='Favorites'>favorites
+			{favorites.map((city)=>{
+				return <div className='favorit-card'></div>
+			})}
+
+		</div>
 	)
 }
