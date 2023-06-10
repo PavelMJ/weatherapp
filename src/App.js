@@ -9,36 +9,43 @@ import { useEffect, useState } from 'react';
 
 
 function App() {
-	const KEY = 'Cyu1jaiubNmcSmDth7N9EgQA4Mh97c6v&q'
+	const KEY = 'Wt52VB1aWbvyGcarDSV7vT2OSSZZ1J3G'
 
 	const [city, setCity] = useState('tel aviv')
 	const [cityKey, setCityKey] = useState('215793')
-	const [currentData, setcurrentData] = useState({})
+	const [cityName,setCityName]=useState('') 
+	const [currentData, setCurrentData] = useState({})
 	const [fiveDaysData, setFivDaysData] = useState([])
-	console.log(currentData);
-	console.log(fiveDaysData);
+	// console.log(cityKey);
+	// console.log(fiveDaysData);
 
 	const [favorites, setFavorites]=useState([])
 	const [status, setStatus]=useState('Add to Favorites')
-	const [refresh, setRefresh]=useState(true)
-	console.log(favorites);
-	const showFavorites=()=>{
-		setRefresh(!refresh)
+	const setFromFavorites=(key)=>{
+		setCityKey(prev=> prev=key)
 	}
 
 
 
 
 	const changeStatus=()=>{
-		if(favorites.includes(currentData.ID)){
+		if(currentData.isFavorit){
 			setStatus("Add to Favorites")
-			const filtred = favorites.filter(val => val != currentData.ID)
+			const filtred = favorites.filter(val => val.id !== currentData.ID)
+			currentData.isFavorit = false
+			setCurrentData(prev=> prev = currentData)
 			setFavorites([...filtred])
 			
 		}
 		else{
 			setStatus("Remove from Favorites")
-			setFavorites([...favorites, currentData.ID])
+			const newFavorit={
+				id: currentData.ID,
+				cityName: currentData.cityName
+			}
+			setFavorites([...favorites, newFavorit])
+			currentData.isFavorit = true
+			setCurrentData(prev=> prev = currentData)
 			
 		}
 	}
@@ -67,52 +74,97 @@ function App() {
 	},[])
 
 	useEffect(()=>{
-		const favoritData = JSON.stringify(favorites)
+		if(favorites.length !==0){
+			const favoritData = JSON.stringify(favorites)
 			localStorage.setItem('favoritData',favoritData)
+		}
+
+			
 	},[favorites])
 
 
 
 	useEffect(() => {
-		fetch(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${KEY}=${city}`)
-			.then(res => res.json())
-			.then(data => {
-				setCityKey(prev => prev = data[0].Key)
-
-				const cityName = data[0].LocalizedName
+		fetch(`http://localhost:4444/autocomplete/${city}`)
+		.then(res => res.json())
+		.then(data => {
+			console.log(data);
+			if(!data[0]){
+				let localData = localStorage.getItem(`${city}`)
+				if(localData){
+					setCurrentData(JSON.parse(localData))
+				}
+				else{
+					let current = {
+					ID:'none',
+					cityName: "City does't exist",
+					WeatherText: '',
+					Temperature: '',
+					isFavorit: false
+				}
+				setCurrentData(current)}
 				
+				
+			}
+			else{
+				setCityKey(prev => prev = data[0].Key)
+				setCityName(prev=> prev = data[0].LocalizedName)
+	
+			}
+		})
+		.catch((err) => {console.error(err, 'Autocomplete search data error')
+	
+	})}, [city])
 
-				fetch(`http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${KEY}`)
-					.then(res => res.json())
-					.then(data => {
 
-						if (data) {
-							let current = {
-								ID: cityKey,
-								cityName,
-								WeatherText: data[0].WeatherText,
-								IsDayTime: data[0].IsDayTime,
-								Temperature: data[0].Temperature.Metric.Value
-							}
-							const weatherData = JSON.stringify(current)
-							localStorage.setItem(city, weatherData)
-							setcurrentData(prev => prev = current)
-						}
-						else {
-							const localData = localStorage.getItem(city)
-							setcurrentData(prev => prev = localData)
-						}
 
-					})
-					.catch((err) => {
-						console.log(err, 'current condition data error');
-					})
+	useEffect(()=>{
+		
+		fetch(`http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${KEY}`)
+		.then(res => res.json())
+		.then(data => {
+			if(!data[0]){
 
-			})
-			.catch((err) => {
-				console.log(err, 'Autocomplete search data error')
-			});
-	}, [city])
+			}
+			if (data[0]) {
+				let current = {
+					ID: cityKey,
+					cityName,
+					WeatherText: data[0].WeatherText,
+					Temperature: data[0].Temperature.Metric.Value,
+					isFavorit: false
+				}
+				setStatus('Add to Favorites')
+				favorites.forEach((val)=>{
+					if(val.id === current.ID){
+						current.isFavorit =true
+						setStatus('Remove from Favorites')
+					}
+				})
+		
+
+				const weatherData = JSON.stringify(current)
+				localStorage.setItem(city, weatherData)
+				setCurrentData(current)
+			}
+			else {
+				const localData = localStorage.getItem(city)
+				
+				setCurrentData(prev => prev = JSON.parse(localData))
+			}
+
+		
+	})
+		.catch((err) => {
+			console.log(err, 'current condition data error');
+		}).finally(()=>{
+			const localData = localStorage.getItem(city)
+
+				setCurrentData(prev => prev = JSON.parse(localData))
+		})
+
+	},[cityKey])
+
 
 	useEffect(() => {
 		fetch(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${KEY}&details=false&metric=true`)
@@ -123,19 +175,19 @@ function App() {
 					setFivDaysData([...forcastArr])
 					const forcasts = JSON.stringify(forcastArr)
 					localStorage.setItem(`${city}Forcasts`, forcasts)
-					// console.log(data)
+			
 				}
 				else {
 					const localData = localStorage.getItem(`${city}Forcasts`)
-					setFivDaysData([...localData])
+					setFivDaysData([...JSON.parse(localData)])
 				}
-			})
+			}).catch((err)=>{console.error(err,'fetch error')})
 	}, [currentData])
 
 	return (
 		<div className='App'>
 			<BrowserRouter>
-				<Header showFavorites={showFavorites} />
+				<Header  />
 				<Routes>
 					<Route path='/' element={<Home
 					 currentData={currentData}
@@ -146,8 +198,9 @@ function App() {
 						 />} />
 					<Route path='/favorites' element={<Favorites
 					favorites={favorites}
-					refresh={refresh}
-					cityKey={cityKey}
+					KEY={KEY}
+					setFromFavorites={setFromFavorites}
+					
 					 />} />
 				</Routes>
 			</BrowserRouter>

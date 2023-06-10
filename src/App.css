@@ -3,17 +3,22 @@
 	flex-direction: column;
 	width: 400px;
 	height: fit-content;
-	min-height: 400px;
+	min-height: 450px;
 }
 
-.App-header, .nav-btns,.input-panel, .MainInfo, .WeatherInfo, .Favorites,
+.App-header, .nav-btns,.input-panel, .MainInfo, .WeatherInfo, .favor-cards,
 .forcasts, .day-temp{
 	display: flex;
 	flex-direction: row;
 }
-.Home,.day,.data{
+.Home,.day,.data, .Condition, .Favorites{
 	display: flex;
 	flex-direction: column;
+}
+
+.Home{
+	align-items: center;
+	padding: 5px;
 }
 .input-panel{
 	margin: 5px;
@@ -77,33 +82,52 @@
 }
 
 .forcasts{
-	width: 95%;
+	width: 98%;
 	height: 80px;
 }
 
 .day{
-	width: 19%;
+	width: 90px;
+	height: 90px;
 	margin: 2px;
+	padding: 3px;
 	border-radius: 5px;
 	background-color: rgb(194, 195, 195);
 }
 
 .Favorites{
+	align-items: center;
 	width: 95%;
-	height: 300px;
+	min-height: 150;
+	height: fit-content;
 	padding: 10px;
 	border: solid 1px black;
+	background-color: #a7aec7;
 
 }
 
-.favorit-card{
-	width: 130px;
-	height: 160px;
+.favor-cards{
+	flex-wrap: wrap;
+	width: 100%;
+	height: fit-content;
+	border-radius: 8px;
+	padding: 5px;
+}
+
+.Condition{
+	margin: 5px;
+	cursor: pointer;
+	width: 110px;
+	height: 140px;
 	border-radius: 5px;
-	background-color: cadetblue;
+	background-color: rgb(206, 218, 231);
 	border: solid 1px black;
 
 
+}
+
+.favor-temp{
+	font-size: 30px;
 }
 
 

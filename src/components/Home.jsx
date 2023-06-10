@@ -4,6 +4,7 @@ import WeatherInfo from './WeatherInfo'
 
 export default function Home({ currentData, fiveDaysData, getCityName,status, changeStatus }) {
 	const [name, setName] = useState('')
+	// console.log(currentData);
 
 
 	return (
@@ -23,8 +24,8 @@ export default function Home({ currentData, fiveDaysData, getCityName,status, ch
 					}}>{status}</button>
 			</div>
 			<div className='forcasts'>
-				{fiveDaysData.map((day) => {
-					return <div className='day'>
+				{fiveDaysData.map((day, index) => {
+					return <div className='day' key={index}>
 						<div className='day-conditions'>
 							<div className='day-temp'>{`${day.temperature.toFixed(2)} ${day.unit}`}&deg;</div>
 							<img src="img/cloud_sun_sunny_weather_icon.svg" alt="" width={'30px'} height={'auto'} />
