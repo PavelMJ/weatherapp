@@ -46,7 +46,7 @@ export default function Conditions({ data, KEY,setFromFavorites }) {
 	return (
 		<div className='Condition' onClick={chooseCity}>
 			<div className='favor-temp'>{favoritData.Temperature} C &deg;</div>
-			<img src="img/cloud_sun_sunny_weather_icon.svg" alt="" width={'60px'} height={'auto'} />
+			<img src={`${favoritData.WeatherText}.svg`} alt="" width={'60px'} height={'auto'} />
 			<div className='favor-name'>{favoritData.cityName}</div>
 
 		</div>

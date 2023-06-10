@@ -8,7 +8,7 @@ export default function WeatherInfo({currentData}) {
 			<div className='name-of-city'>{currentData.cityName}</div>
 		</div>
 		<div className='data'>
-			<img src="img/cloud_sun_sunny_weather_icon.svg" alt="info-icon" />
+			<img src={`${currentData.WeatherText}.svg`} alt="info-icon" />
 			<div className='info'>{currentData.WeatherText}</div>
 		</div>
 	</div>

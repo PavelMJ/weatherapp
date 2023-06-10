@@ -1,16 +1,17 @@
 
 import './App.css';
+import {KEY,autocomplete, currentconditions,forcasts, autocomleteServerUrl,currentconditionsServerUrl,forcastsServerUrl  } from './utils/urls'
 import dateToDay from './utils/dayConverter';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './components/Home';
 import Favorites from './components/Favorites';
 import { useEffect, useState } from 'react';
-import { logDOM } from '@testing-library/react';
+
 
 
 function App() {
-	const KEY = 'Wt52VB1aWbvyGcarDSV7vT2OSSZZ1J3G'
+
 
 	const [city, setCity] = useState('tel aviv')
 	const [cityKey, setCityKey] = useState('215793')
@@ -23,12 +24,18 @@ function App() {
 	const [favorites, setFavorites]=useState([])
 	const [status, setStatus]=useState('Add to Favorites')
 
+	useEffect(()=>{
+		const data =localStorage.getItem('favoritData')
+		if(data){
+			const favoritData = JSON.parse(data)
+			setFavorites([...favoritData])
+		}
+	},[])
+
 	console.log(favorites);
 	const setFromFavorites=(key)=>{
 		setCityKey(prev=> prev=key)
 	}
-
-
 
 
 	const changeStatus=()=>{
@@ -64,25 +71,19 @@ function App() {
 		setCity(name)
 	}
 
-	useEffect(()=>{
-		const data =localStorage.getItem('favoritData')
-		if(data){
-			const favoritData = JSON.parse(data)
-			setFavorites([...favoritData])
-		}
-	},[])
+
 
 	useEffect(()=>{
-		if(favorites.length !==0){
+		
 			const favoritData = JSON.stringify(favorites)
 			localStorage.setItem('favoritData',favoritData)
-		}
+		
 	},[favorites])
 
 
 
 	useEffect(() => {
-		fetch(`http://localhost:4444/autocomplete/${city}`)
+		fetch(autocomleteServerUrl)
 		.then(res => res.json())
 		.then(data => {
 			console.log(data);
@@ -127,7 +128,7 @@ function App() {
 
 	useEffect(()=>{
 		
-		fetch(`http://localhost:4444/currentconditions/${cityKey}`)
+		fetch(currentconditionsServerUrl)
 		.then(res => res.json())
 		.then(data => {
 			if(!data[0]){
@@ -174,7 +175,7 @@ function App() {
 
 
 	useEffect(() => {
-		fetch(`http://localhost:4444/forecasts/${cityKey}`)
+		fetch(forcastsServerUrl)
 			.then(res => res.json())
 			.then((data) => {
 				if (!data || data.Code=='ServiceUnavailable') {

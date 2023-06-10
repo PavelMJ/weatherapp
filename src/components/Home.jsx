@@ -28,7 +28,7 @@ export default function Home({ currentData, fiveDaysData, getCityName,status, ch
 					return <div className='day' key={index}>
 						<div className='day-conditions'>
 							<div className='day-temp'>{`${day.temperature.toFixed(2)} ${day.unit}`}&deg;</div>
-							<img src="img/cloud_sun_sunny_weather_icon.svg" alt="" width={'30px'} height={'auto'} />
+							<img src={`img/${day.weatherText}.svg`} alt="" width={'30px'} height={'auto'} />
 						</div>
 						<div className='day-of-week'>{day.day}</div>
 					</div>
