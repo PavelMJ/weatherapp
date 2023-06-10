@@ -11,7 +11,7 @@ export default function Favorites({ favorites, KEY, setFromFavorites }) {
 			<div style={{fontSize:'25px', color:'white'}}>Favorites</div>
 			<div className='favor-cards'>
 				{favorites.map((data) => {
-					return <Conditions key={data.id} cityKey={data.id} cityName={data.cityName} KEY={KEY}
+					return <Conditions key={data.id}  data={data} KEY={KEY}
 						setFromFavorites={setFromFavorites}
 					/>
 				})}

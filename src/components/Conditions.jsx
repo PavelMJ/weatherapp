@@ -1,39 +1,43 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export default function Conditions({ cityKey, cityName, KEY,setFromFavorites,  }) {
+export default function Conditions({ data, KEY,setFromFavorites }) {
 	const nav = useNavigate()
 	const [favoritData, setFavoritData] = useState({})
+	console.log(data);
 	const chooseCity=()=>{
-		setFromFavorites(cityKey)
+		setFromFavorites(data.cityKey)
 		nav('/')
 	}
 
 
 	useEffect(() => {
-		fetch(`http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${KEY}`)
+		fetch(`http://localhost:4444/currentconditions/${data.cityKey}`)
 			.then(res => res.json())
 			.then(data => {
 
-				if (data) {
+				if (data[0]) {
 					let current = {
-						ID: cityKey,
-						cityName,
+						ID: data.cityKey,
+						cityName: data.cityName,
 						WeatherText: data[0].WeatherText,
 						Temperature: data[0].Temperature.Metric.Value
 					}
-					const weatherData = JSON.stringify(current)
-					localStorage.setItem(`favorit-${cityName}`, weatherData)
+					// const weatherData = JSON.stringify(current)
+					// localStorage.setItem(`favorit-${data.cityName}`, weatherData)
 					setFavoritData(prev => prev = current)
 				}
 				else {
-					const localData = localStorage.getItem(`favorit-${cityName}`)
-					setFavoritData(prev => prev = localData)
+					// const localData = localStorage.getItem(`favorit-${data.cityName}`)
+					setFavoritData(prev => prev = data)
 				}
 
 			})
 			.catch((err) => {
 				console.log(err, 'favorit condition data error');
+			}).finally(()=>{
+				// const localData = localStorage.getItem(`favorit-${data.cityName}`)
+					setFavoritData(prev => prev = data)
 			})
 
 	}, [])

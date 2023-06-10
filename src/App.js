@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Favorites from './components/Favorites';
 import { useEffect, useState } from 'react';
+import { logDOM } from '@testing-library/react';
 
 
 function App() {
@@ -16,11 +17,13 @@ function App() {
 	const [cityName,setCityName]=useState('') 
 	const [currentData, setCurrentData] = useState({})
 	const [fiveDaysData, setFivDaysData] = useState([])
-	// console.log(cityKey);
+	
 	// console.log(fiveDaysData);
 
 	const [favorites, setFavorites]=useState([])
 	const [status, setStatus]=useState('Add to Favorites')
+
+	console.log(favorites);
 	const setFromFavorites=(key)=>{
 		setCityKey(prev=> prev=key)
 	}
@@ -31,7 +34,7 @@ function App() {
 	const changeStatus=()=>{
 		if(currentData.isFavorit){
 			setStatus("Add to Favorites")
-			const filtred = favorites.filter(val => val.id !== currentData.ID)
+			const filtred = favorites.filter(val => val.ID !== currentData.ID)
 			currentData.isFavorit = false
 			setCurrentData(prev=> prev = currentData)
 			setFavorites([...filtred])
@@ -39,12 +42,8 @@ function App() {
 		}
 		else{
 			setStatus("Remove from Favorites")
-			const newFavorit={
-				id: currentData.ID,
-				cityName: currentData.cityName
-			}
-			setFavorites([...favorites, newFavorit])
 			currentData.isFavorit = true
+			setFavorites([...favorites, currentData])
 			setCurrentData(prev=> prev = currentData)
 			
 		}
@@ -78,8 +77,6 @@ function App() {
 			const favoritData = JSON.stringify(favorites)
 			localStorage.setItem('favoritData',favoritData)
 		}
-
-			
 	},[favorites])
 
 
@@ -90,10 +87,21 @@ function App() {
 		.then(data => {
 			console.log(data);
 			if(!data[0]){
-				let localData = localStorage.getItem(`${city}`)
-				if(localData){
-					setCurrentData(JSON.parse(localData))
-				}
+				let jsonData = localStorage.getItem(`${city}`)
+				if(jsonData){
+					
+				let localData = JSON.parse(jsonData)
+				
+				favorites.forEach((val)=>{
+					if(localData.ID ===val.ID){
+						localData.isFavorit=true
+						setStatus('Remove from Favorites')
+					}
+				})
+				setCurrentData(localData)
+
+
+			  }
 				else{
 					let current = {
 					ID:'none',
@@ -103,9 +111,8 @@ function App() {
 					isFavorit: false
 				}
 				setCurrentData(current)}
-				
-				
 			}
+			
 			else{
 				setCityKey(prev => prev = data[0].Key)
 				setCityName(prev=> prev = data[0].LocalizedName)
@@ -120,7 +127,7 @@ function App() {
 
 	useEffect(()=>{
 		
-		fetch(`http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${KEY}`)
+		fetch(`http://localhost:4444/currentconditions/${cityKey}`)
 		.then(res => res.json())
 		.then(data => {
 			if(!data[0]){
@@ -136,7 +143,7 @@ function App() {
 				}
 				setStatus('Add to Favorites')
 				favorites.forEach((val)=>{
-					if(val.id === current.ID){
+					if(val.ID === current.ID){
 						current.isFavorit =true
 						setStatus('Remove from Favorites')
 					}
@@ -167,21 +174,25 @@ function App() {
 
 
 	useEffect(() => {
-		fetch(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${KEY}&details=false&metric=true`)
+		fetch(`http://localhost:4444/forecasts/${cityKey}`)
 			.then(res => res.json())
 			.then((data) => {
-				if (data) {
+				if (!data || data.Code=='ServiceUnavailable') {
+					const localData = localStorage.getItem(`${city}Forcasts`)
+					setFivDaysData([...JSON.parse(localData)])
+			
+				}
+				else {
 					const forcastArr = builForcast(data)
 					setFivDaysData([...forcastArr])
 					const forcasts = JSON.stringify(forcastArr)
 					localStorage.setItem(`${city}Forcasts`, forcasts)
-			
-				}
-				else {
-					const localData = localStorage.getItem(`${city}Forcasts`)
-					setFivDaysData([...JSON.parse(localData)])
 				}
 			}).catch((err)=>{console.error(err,'fetch error')})
+			.finally(()=>{
+				const localData = localStorage.getItem(`${city}Forcasts`)
+				setFivDaysData([...JSON.parse(localData)])
+			})
 	}, [currentData])
 
 	return (

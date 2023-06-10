@@ -28,7 +28,7 @@
 
 
 .App-header{
-	padding: 0 4px;
+	padding: 0 11px;
 	height: 40px;
 	width: 100%;
 	background-color: cornflowerblue;
@@ -97,7 +97,7 @@
 
 .Favorites{
 	align-items: center;
-	width: 95%;
+	width: 100%;
 	min-height: 150;
 	height: fit-content;
 	padding: 10px;
@@ -116,8 +116,9 @@
 
 .Condition{
 	margin: 5px;
+	padding: 5px;
 	cursor: pointer;
-	width: 110px;
+	width: 100px;
 	height: 140px;
 	border-radius: 5px;
 	background-color: rgb(206, 218, 231);
@@ -127,7 +128,7 @@
 }
 
 .favor-temp{
-	font-size: 30px;
+	font-size: 25px;
 }
 
 
