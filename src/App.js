@@ -19,13 +19,13 @@ function App() {
 	const [status, setStatus]=useState('Add to Favorites')
 	console.log(cityName);
 
-	const KEY = 'Hv2jvIsDrtObov90ieoauuGF2enoscYm'
-	const autocomplete=`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${KEY}&q=${city}`
-	const autocomleteServerUrl=`http://localhost:4444/autocomplete/${city}`
-	const currentconditions= `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${KEY}`
-	const currentconditionsServerUrl=`http://localhost:4444/currentconditions/${cityKey}`
-	const forcasts= `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${KEY}`
-	const forcastsServerUrl=`http://localhost:4444/forecasts/${cityKey}`
+	// const KEY = 'Hv2jvIsDrtObov90ieoauuGF2enoscYm'
+	// const autocomplete=`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${KEY}&q=${city}`
+	// const autocomleteServerUrl=`http://localhost:4444/autocomplete/${city}`
+	// const currentconditions= `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${KEY}`
+	// const currentconditionsServerUrl=`http://localhost:4444/currentconditions/${cityKey}`
+	// const forcasts= `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${KEY}`
+	// const forcastsServerUrl=`http://localhost:4444/forecasts/${cityKey}`
  
 
 	useEffect(()=>{
@@ -87,7 +87,7 @@ function App() {
 
 
 	useEffect(() => {
-		fetch(autocomleteServerUrl)
+		fetch(`/autocomplete/${city}`)
 		.then(res => res.json())
 		.then(data => {
 			console.log(data[0]);
@@ -132,7 +132,7 @@ function App() {
 
 	useEffect(()=>{
 		
-		fetch(`http://localhost:4444/currentconditions/${cityKey}`)
+		fetch(`/currentconditions/${cityKey}`)
 		.then(res => res.json())
 		.then(data => {
 			console.log(data);
@@ -174,7 +174,7 @@ function App() {
 
 
 	useEffect(() => {
-		fetch(`http://localhost:4444/forecasts/${cityKey}`)
+		fetch(`/forecasts/${cityKey}`)
 			.then(res => res.json())
 			.then((data) => {
 				console.log(data);
