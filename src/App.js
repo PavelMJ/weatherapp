@@ -1,7 +1,7 @@
 
 import './App.css';
 import dateToDay from './utils/dayConverter';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouterRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './components/Home';
 import Favorites from './components/Favorites';
@@ -195,7 +195,7 @@ function App() {
 
 	return (
 		<div className='App'>
-			<BrowserRouter>
+			<HashRouterRouter>
 				<Header  />
 				<Routes>
 					<Route path='/' element={<Home
@@ -212,7 +212,7 @@ function App() {
 					
 					 />} />
 				</Routes>
-			</BrowserRouter>
+			</HashRouterRouter>
 		</div>
 	)
 }
