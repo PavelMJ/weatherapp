@@ -19,7 +19,7 @@ function App() {
 	const [status, setStatus]=useState('Add to Favorites')
 	console.log(cityName);
 
-	const KEY = 'Hv2jvIsDrtObov90ieoauuGF2enoscYm'
+	const KEY = 'H75dp9AlEPodjtrF2jWEkg010Kp4Lpmw'
 	// const autocomplete=`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${KEY}&q=${city}`
 	// const autocomleteServerUrl=`http://localhost:4444/autocomplete/${city}`
 	// const currentconditions= `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${KEY}`
