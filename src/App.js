@@ -132,7 +132,7 @@ function App() {
 
 	useEffect(()=>{
 		
-		fetch(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${KEY}`)
+		fetch(`http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${KEY}`)
 		.then(res => res.json())
 		.then(data => {
 			console.log(data);
