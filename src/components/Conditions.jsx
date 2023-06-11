@@ -13,7 +13,7 @@ export default function Conditions({ item, KEY,setFromFavorites }) {
 
 
 	useEffect(() => {
-		fetch(`http://localhost:4444/currentconditions/${item.cityKey}`)
+		fetch(`/currentconditions/${item.cityKey}`)
 			.then(res => res.json())
 			.then(data => {
 				
