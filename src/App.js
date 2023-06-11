@@ -87,7 +87,7 @@ function App() {
 
 
 	useEffect(() => {
-		fetch(autocomleteServerUrl)
+		fetch(`http://localhost:4444/autocomplete/${city}`)
 		.then(res => res.json())
 		.then(data => {
 			console.log(data[0]);
