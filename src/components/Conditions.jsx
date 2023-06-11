@@ -13,7 +13,7 @@ export default function Conditions({ item, KEY,setFromFavorites }) {
 
 
 	useEffect(() => {
-		fetch(`http://localhost:4444/currentconditions/${item.cityKey}`)
+		fetch(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${item.cityKey}?apikey=${KEY}`)
 			.then(res => res.json())
 			.then(data => {
 				

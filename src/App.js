@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 
 
 function App() {
-	const [city, setCity] = useState('rehovot')
+	const [city, setCity] = useState('tel aviv')
 	const [cityKey, setCityKey] = useState('215793')
 	const [cityName,setCityName]=useState('') 
 	const [currentData, setCurrentData] = useState({})
@@ -20,12 +20,12 @@ function App() {
 	console.log(cityName);
 
 	const KEY = 'Hv2jvIsDrtObov90ieoauuGF2enoscYm'
-	const autocomplete=`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${KEY}&q=${city}`
-	const autocomleteServerUrl=`http://localhost:4444/autocomplete/${city}`
-	const currentconditions= `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${KEY}`
-	const currentconditionsServerUrl=`http://localhost:4444/currentconditions/${cityKey}`
-	const forcasts= `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${KEY}`
-	const forcastsServerUrl=`http://localhost:4444/forecasts/${cityKey}`
+	// const autocomplete=`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${KEY}&q=${city}`
+	// const autocomleteServerUrl=`http://localhost:4444/autocomplete/${city}`
+	// const currentconditions= `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${KEY}`
+	// const currentconditionsServerUrl=`http://localhost:4444/currentconditions/${cityKey}`
+	// const forcasts= `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${KEY}`
+	// const forcastsServerUrl=`http://localhost:4444/forecasts/${cityKey}`
  
 
 	useEffect(()=>{
@@ -87,7 +87,7 @@ function App() {
 
 
 	useEffect(() => {
-		fetch(autocomleteServerUrl)
+		fetch(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${KEY}&q=${city}`)
 		.then(res => res.json())
 		.then(data => {
 			console.log(data[0]);
@@ -132,7 +132,7 @@ function App() {
 
 	useEffect(()=>{
 		
-		fetch(`http://localhost:4444/currentconditions/${cityKey}`)
+		fetch(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${KEY}`)
 		.then(res => res.json())
 		.then(data => {
 			console.log(data);
@@ -174,7 +174,7 @@ function App() {
 
 
 	useEffect(() => {
-		fetch(`http://localhost:4444/forecasts/${cityKey}`)
+		fetch(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${KEY}&metric=true`)
 			.then(res => res.json())
 			.then((data) => {
 				console.log(data);
