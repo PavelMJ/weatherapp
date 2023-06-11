@@ -1,6 +1,5 @@
 
 import './App.css';
-import {KEY,autocomplete, currentconditions,forcasts, autocomleteServerUrl,currentconditionsServerUrl,forcastsServerUrl  } from './utils/urls'
 import dateToDay from './utils/dayConverter';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
@@ -11,18 +10,23 @@ import { useEffect, useState } from 'react';
 
 
 function App() {
-
-
-	const [city, setCity] = useState('tel aviv')
+	const [city, setCity] = useState('rehovot')
 	const [cityKey, setCityKey] = useState('215793')
 	const [cityName,setCityName]=useState('') 
 	const [currentData, setCurrentData] = useState({})
 	const [fiveDaysData, setFivDaysData] = useState([])
-	
-	// console.log(fiveDaysData);
-
 	const [favorites, setFavorites]=useState([])
 	const [status, setStatus]=useState('Add to Favorites')
+	console.log(cityName);
+
+	const KEY = 'Hv2jvIsDrtObov90ieoauuGF2enoscYm'
+	const autocomplete=`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${KEY}&q=${city}`
+	const autocomleteServerUrl=`http://localhost:4444/autocomplete/${city}`
+	const currentconditions= `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${KEY}`
+	const currentconditionsServerUrl=`http://localhost:4444/currentconditions/${cityKey}`
+	const forcasts= `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${KEY}`
+	const forcastsServerUrl=`http://localhost:4444/forecasts/${cityKey}`
+ 
 
 	useEffect(()=>{
 		const data =localStorage.getItem('favoritData')
@@ -86,7 +90,7 @@ function App() {
 		fetch(autocomleteServerUrl)
 		.then(res => res.json())
 		.then(data => {
-			console.log(data);
+			console.log(data[0]);
 			if(!data[0]){
 				let jsonData = localStorage.getItem(`${city}`)
 				if(jsonData){
@@ -128,12 +132,10 @@ function App() {
 
 	useEffect(()=>{
 		
-		fetch(currentconditionsServerUrl)
+		fetch(`http://localhost:4444/currentconditions/${cityKey}`)
 		.then(res => res.json())
 		.then(data => {
-			if(!data[0]){
-
-			}
+			console.log(data);
 			if (data[0]) {
 				let current = {
 					ID: cityKey,
@@ -165,19 +167,17 @@ function App() {
 	})
 		.catch((err) => {
 			console.log(err, 'current condition data error');
-		}).finally(()=>{
-			const localData = localStorage.getItem(city)
-
-				setCurrentData(prev => prev = JSON.parse(localData))
+		
 		})
 
 	},[cityKey])
 
 
 	useEffect(() => {
-		fetch(forcastsServerUrl)
+		fetch(`http://localhost:4444/forecasts/${cityKey}`)
 			.then(res => res.json())
 			.then((data) => {
+				console.log(data);
 				if (!data || data.Code=='ServiceUnavailable') {
 					const localData = localStorage.getItem(`${city}Forcasts`)
 					setFivDaysData([...JSON.parse(localData)])
@@ -190,10 +190,7 @@ function App() {
 					localStorage.setItem(`${city}Forcasts`, forcasts)
 				}
 			}).catch((err)=>{console.error(err,'fetch error')})
-			.finally(()=>{
-				const localData = localStorage.getItem(`${city}Forcasts`)
-				setFivDaysData([...JSON.parse(localData)])
-			})
+		
 	}, [currentData])
 
 	return (

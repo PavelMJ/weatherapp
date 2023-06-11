@@ -1,7 +1,327 @@
+
+
+@media only screen and  (max-width: 2000px){
+	.App {
+		margin:0 10px;
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		
+		width:100vh;
+		height: fit-content;
+		min-height: 450px;
+	}
+	
+	.App-header, .nav-btns,.input-panel, .MainInfo, .WeatherInfo, .favor-cards,
+	.forcasts, .day-temp{
+		display: flex;
+		flex-direction: row;
+	}
+	.Home,.day,.data, .Condition, .Favorites{
+		display: flex;
+		flex-direction: column;
+	}
+	
+	.Home{
+		align-items: center;
+		padding: 5px;
+	}
+	.input-panel{
+		width: 100%;
+		margin: 5px;
+		display: flex;
+		justify-content: center;
+	}
+	
+	
+	.App-header{
+	
+	
+		height: 60px;
+		width: 100%;
+		background-color: cornflowerblue;
+		align-items: center;
+		justify-content: space-around;
+	
+	}
+	
+	.data{
+		justify-content: space-between;
+		padding: 0 10px;
+		width: fit-content;
+		height: fit-content;
+		margin: 10px;
+	}
+	
+	.header-btn{
+		cursor: pointer;
+		margin: 10px;
+		width: 100px;
+		height: 40px;
+		font-size: 18px ;
+	}
+
+	.header-title{
+		font-size: 30px;
+	}
+	
+	.MainInfo{
+		display: flex;
+		justify-content: center;
+		padding: 0 15px;
+	}
+	
+	.temperature{
+		font-size: 60px;
+	}
+	
+	.search-btn{
+		width: 20%;
+	}
+	
+	.search-input{
+		width: 100%;
+		height: 30px;
+	
+	}
+	
+	.name-of-city{
+		font-size: 25px;
+	}
+	
+	.add-to-favorite{
+		width: 180px;
+		height: 60px;
+		margin: 30px 15px;
+		font-size: 20px;
+	}
+	
+	.WeatherInfo{
+	
+	}
+	
+	.forcasts{
+		justify-content: space-between;
+		width: 120%;
+		height: 80px;
+	}
+	
+	.day{
+		width: 140px;
+		height: 160px;
+		margin: 2px;
+		padding: 3px;
+		border-radius: 5px;
+		background-color: rgb(194, 195, 195);
+	}
+	
+	.Favorites{
+		align-items: center;
+		width: 97%;
+		min-height: 150;
+		height: fit-content;
+		padding: 14px;
+		border: solid 1px black;
+		background-color: #a7aec7;
+	
+	}
+	.day-temp{
+		font-size: 30px;
+	}
+	
+	.favor-cards{
+		flex-wrap: wrap;
+		width: 100%;
+		height: fit-content;
+		border-radius: 8px;
+		padding: 5px;
+	}
+	
+	.Condition{
+		margin: 5px;
+		padding: 5px;
+		cursor: pointer;
+		width: 140px;
+		height: 180px;
+		border-radius: 5px;
+		background-color: rgb(206, 218, 231);
+		border: solid 1px black;
+	
+	
+	}
+	
+	.favor-temp{
+		font-size: 35px;
+	}
+
+	.favor-name{
+		font-size: 30px;
+	}
+	
+	
+	}
+	
+
+
+
+
+@media only screen and  (max-width: 800px){
+	.App {
+		margin:0 10px;
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		
+		width:100%;
+		height: fit-content;
+		min-height: 450px;
+	}
+	
+	.App-header, .nav-btns,.input-panel, .MainInfo, .WeatherInfo, .favor-cards,
+	.forcasts, .day-temp{
+		display: flex;
+		flex-direction: row;
+	}
+	.Home,.day,.data, .Condition, .Favorites{
+		display: flex;
+		flex-direction: column;
+	}
+	
+	.Home{
+		align-items: center;
+		padding: 5px;
+	}
+	.input-panel{
+		width: 98%;
+		margin: 5px;
+		display: flex;
+		justify-content: center;
+	}
+	
+	
+	.App-header{
+		padding: 0 11px;
+		height: 40px;
+		width: 100%;
+		background-color: cornflowerblue;
+		align-items: center;
+		justify-content: space-between;
+	
+	}
+	
+	.data{
+		justify-content: space-between;
+		padding: 0 10px;
+	}
+	
+	.header-btn{
+		cursor: pointer;
+		margin: 3px;
+	}
+	
+	.MainInfo{
+		display: flex;
+		justify-content: center;
+		padding: 0 5px;
+	}
+	
+	.temperature{
+		font-size: 35px;
+	}
+	
+	.search-btn{
+
+		width: 20%;
+		
+	}
+	
+	.search-input{
+		width: 85%;
+		height: 30px;
+	
+	}
+	.day-temp{
+		font-size: 15px;
+	}
+	
+	.name-of-city{
+		font-size: 25px;
+	}
+	
+	.add-to-favorite{
+		width: 100px;
+		height: 40px;
+		margin: 15px 5px;
+		font-size: 15px;
+	}
+	
+	.WeatherInfo{
+	
+	}
+	
+	.forcasts{
+		width: 98%;
+		height: 80px;
+	}
+	
+	.day{
+		width: 90px;
+		height: 90px;
+		margin: 2px;
+		padding: 3px;
+		border-radius: 5px;
+		background-color: rgb(194, 195, 195);
+	}
+	
+	.Favorites{
+		align-items: center;
+		width: 100%;
+		min-height: 150;
+		height: fit-content;
+		padding: 10px;
+		border: solid 1px black;
+		background-color: #a7aec7;
+	
+	}
+	
+	.favor-cards{
+		flex-wrap: wrap;
+		width: 100%;
+		height: fit-content;
+		border-radius: 8px;
+		padding: 5px;
+	}
+	
+	.Condition{
+		margin: 5px;
+		padding: 5px;
+		cursor: pointer;
+		width: 100px;
+		height: 140px;
+		border-radius: 5px;
+		background-color: rgb(206, 218, 231);
+		border: solid 1px black;
+	
+	
+	}
+	
+	.favor-temp{
+		font-size: 25px;
+	}
+	
+	
+	}
+	
+
+
+@media only screen and  (max-width: 600px){
 .App {
+	margin:0 10px;
+	align-items: center;
   display: flex;
 	flex-direction: column;
-	width: 400px;
+
+	width:100%;
 	height: fit-content;
 	min-height: 450px;
 }
@@ -72,6 +392,7 @@
 }
 
 .add-to-favorite{
+	font-size: 15px;
 	width: 100px;
 	height: 40px;
 	margin: 15px 5px;
@@ -134,6 +455,6 @@
 
 
 
-
+}
 
 

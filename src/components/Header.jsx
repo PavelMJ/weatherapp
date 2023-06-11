@@ -8,7 +8,7 @@ export default function Header()
 {
 	return (
 		<div className='App-header' >
-			<h2>Weathers</h2>
+			<h2 className='header-title'>Weathers</h2>
 			<div className='nav-btns'>
 				<Link to='/'><button className='header-btn'>Home</button></Link>
 				<Link to='/favorites'><button className='header-btn'>Favorites</button></Link>

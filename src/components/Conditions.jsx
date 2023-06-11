@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export default function Conditions({ data, KEY,setFromFavorites }) {
+export default function Conditions({ item, KEY,setFromFavorites }) {
+	
 	const nav = useNavigate()
 	const [favoritData, setFavoritData] = useState({})
-	console.log(data);
+	console.log(favoritData);
 	const chooseCity=()=>{
-		setFromFavorites(data.cityKey)
+		setFromFavorites(item.cityKey)
 		nav('/')
 	}
 
 
 	useEffect(() => {
-		fetch(`http://localhost:4444/currentconditions/${data.cityKey}`)
+		fetch(`http://localhost:4444/currentconditions/${item.cityKey}`)
 			.then(res => res.json())
 			.then(data => {
-
+				
 				if (data[0]) {
 					let current = {
 						ID: data.cityKey,
@@ -29,15 +30,12 @@ export default function Conditions({ data, KEY,setFromFavorites }) {
 				}
 				else {
 					// const localData = localStorage.getItem(`favorit-${data.cityName}`)
-					setFavoritData(prev => prev = data)
+					setFavoritData(prev => prev = item)
 				}
 
 			})
 			.catch((err) => {
 				console.log(err, 'favorit condition data error');
-			}).finally(()=>{
-				// const localData = localStorage.getItem(`favorit-${data.cityName}`)
-					setFavoritData(prev => prev = data)
 			})
 
 	}, [])
@@ -46,7 +44,7 @@ export default function Conditions({ data, KEY,setFromFavorites }) {
 	return (
 		<div className='Condition' onClick={chooseCity}>
 			<div className='favor-temp'>{favoritData.Temperature} C &deg;</div>
-			<img src={`${favoritData.WeatherText}.svg`} alt="" width={'60px'} height={'auto'} />
+			<img src={`img/${favoritData.WeatherText}.svg`} alt="" width={'80px'} height={'auto'} />
 			<div className='favor-name'>{favoritData.cityName}</div>
 
 		</div>
