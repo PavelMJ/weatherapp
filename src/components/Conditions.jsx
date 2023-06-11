@@ -29,7 +29,7 @@ export default function Conditions({ item, KEY,setFromFavorites }) {
 					setFavoritData(prev => prev = current)
 				}
 				else {
-					// const localData = localStorage.getItem(`favorit-${data.cityName}`)
+					// const localData = localStorage.getItem(`favorit-${data.cityName}`
 					setFavoritData(prev => prev = item)
 				}
 
