@@ -38,7 +38,7 @@
 	
 	
 		height: 60px;
-		width: 100%;
+		width: 180%;
 		background-color: cornflowerblue;
 		align-items: center;
 		justify-content: space-around;
@@ -52,11 +52,6 @@
 		height: fit-content;
 		margin: 10px;
 	}
-
-	.nav-btns{
-		position: relative;
-		left: 50px;
-	}
 	
 	.header-btn{
 		cursor: pointer;
@@ -67,9 +62,7 @@
 	}
 
 	.header-title{
-		position: relative;
 		font-size: 30px;
-		right: 70px;
 	}
 	
 	.MainInfo{
@@ -84,17 +77,12 @@
 	
 	.search-btn{
 		width: 20%;
-		font-size: 18px;
 	}
 	
 	.search-input{
 		width: 100%;
 		height: 30px;
-		font-size: 25px;
 	
-	}
-	.info{
-		font-size: 22px;
 	}
 	
 	.name-of-city{
@@ -114,7 +102,7 @@
 	
 	.forcasts{
 		justify-content: space-between;
-		width: 115%;
+		width: 120%;
 		height: 80px;
 	}
 	
@@ -122,7 +110,7 @@
 		width: 140px;
 		height: 160px;
 		margin: 2px;
-		padding: 10px;
+		padding: 3px;
 		border-radius: 5px;
 		background-color: rgb(194, 195, 195);
 	}
@@ -139,7 +127,6 @@
 	}
 	.day-temp{
 		font-size: 30px;
-		margin: 10px 0;
 	}
 	
 	.favor-cards{
@@ -161,13 +148,6 @@
 		border: solid 1px black;
 	
 	
-	}
-	.day-temp{
-		font-size: 35px;
-	}
-
-	.day-of-week{
-		font-size: 22px;
 	}
 	
 	.favor-temp{
@@ -222,7 +202,7 @@
 	.App-header{
 		padding: 0 11px;
 		height: 40px;
-		width: 92%;
+		width: 100%;
 		background-color: cornflowerblue;
 		align-items: center;
 		justify-content: space-between;
@@ -237,19 +217,6 @@
 	.header-btn{
 		cursor: pointer;
 		margin: 3px;
-		width: 80px;
-		height: 35px;
-		font-size: 16px;
-	}
-
-	.header-title{
-	
-		font-size: 20px;
-		
-	}
-
-	.info{
-		font-size: 16px;
 	}
 	
 	.MainInfo{
@@ -282,8 +249,8 @@
 	}
 	
 	.add-to-favorite{
-		width: 120px;
-		height: 60px;
+		width: 100px;
+		height: 40px;
 		margin: 15px 5px;
 		font-size: 15px;
 	}
@@ -299,9 +266,9 @@
 	
 	.day{
 		width: 90px;
-		height: 110px;
+		height: 90px;
 		margin: 2px;
-		padding: 8px;
+		padding: 3px;
 		border-radius: 5px;
 		background-color: rgb(194, 195, 195);
 	}
@@ -340,10 +307,6 @@
 	
 	.favor-temp{
 		font-size: 25px;
-	}
-
-	.day-of-week{
-		font-size: 16px;
 	}
 	
 	
@@ -387,7 +350,7 @@
 .App-header{
 	padding: 0 11px;
 	height: 40px;
-	width: 70%;
+	width: 100%;
 	background-color: cornflowerblue;
 	align-items: center;
 	justify-content: space-between;
@@ -402,13 +365,6 @@
 .header-btn{
 	cursor: pointer;
 	margin: 3px;
-	width: 60px;
-	height: 35px;
-	font-size: 12px;
-}
-
-.header-title{
-	font-size: 20px;
 }
 
 .MainInfo{
@@ -436,7 +392,7 @@
 }
 
 .add-to-favorite{
-	font-size: 12px;
+	font-size: 15px;
 	width: 100px;
 	height: 40px;
 	margin: 15px 5px;
@@ -447,15 +403,15 @@
 }
 
 .forcasts{
-	width: 78%;
+	width: 98%;
 	height: 80px;
 }
 
 .day{
 	width: 90px;
-	height: 100px;
+	height: 90px;
 	margin: 2px;
-	padding: 5px;
+	padding: 3px;
 	border-radius: 5px;
 	background-color: rgb(194, 195, 195);
 }
@@ -494,9 +450,6 @@
 
 .favor-temp{
 	font-size: 25px;
-}
-.day-of-week{
-	font-size: 14px;
 }
 
 
