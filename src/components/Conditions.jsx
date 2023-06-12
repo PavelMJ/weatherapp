@@ -7,13 +7,13 @@ export default function Conditions({ item, KEY,setFromFavorites }) {
 	const [favoritData, setFavoritData] = useState({})
 	console.log(favoritData);
 	const chooseCity=()=>{
-		setFromFavorites(item.cityKey)
+		setFromFavorites(item.cityName)
 		nav('/')
 	}
 
 
 	useEffect(() => {
-		fetch(`http://localhost:4444/currentconditions/${item.cityKey}`)
+		fetch(`/currentconditions/${item.cityKey}`)
 			.then(res => res.json())
 			.then(data => {
 				

@@ -10,22 +10,37 @@ import { useEffect, useState } from 'react';
 
 
 function App() {
-	const [city, setCity] = useState('rehovot')
+	const [city, setCity] = useState('tel aviv')
 	const [cityKey, setCityKey] = useState('215793')
 	const [cityName,setCityName]=useState('') 
 	const [currentData, setCurrentData] = useState({})
 	const [fiveDaysData, setFivDaysData] = useState([])
 	const [favorites, setFavorites]=useState([])
 	const [status, setStatus]=useState('Add to Favorites')
+	const undefinedData = {
+		ID:'none',
+		cityName: "Gotham",
+		WeatherText: 'Somethig wrong',
+		Temperature: 0,
+		isFavorit: false
+	}
+	const undefinedForcast =[
+		{day: 11/11/23, temperature: 0 ,unit: 'C', weatherText: "Sunny"},
+		{day: 11/11/23, temperature: 0 ,unit: 'C', weatherText: "Cloudy"},
+		{day: 11/11/23, temperature: 0 ,unit: 'C', weatherText: "Rain"},
+		{day: 11/11/23, temperature: 0 ,unit: 'C', weatherText: "Cold"},
+		{day: 11/11/23, temperature: 0 ,unit: 'C', weatherText: "Hot"}
+	,]
+
 	console.log(cityName);
 
-	const KEY = 'Hv2jvIsDrtObov90ieoauuGF2enoscYm'
-	const autocomplete=`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${KEY}&q=${city}`
-	const autocomleteServerUrl=`http://localhost:4444/autocomplete/${city}`
-	const currentconditions= `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${KEY}`
-	const currentconditionsServerUrl=`http://localhost:4444/currentconditions/${cityKey}`
-	const forcasts= `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${KEY}`
-	const forcastsServerUrl=`http://localhost:4444/forecasts/${cityKey}`
+	const KEY = 'H75dp9AlEPodjtrF2jWEkg010Kp4Lpmw'
+	// const autocomplete=`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${KEY}&q=${city}`
+	// const autocomleteServerUrl=`http://localhost:4444/autocomplete/${city}`
+	// const currentconditions= `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${KEY}`
+	// const currentconditionsServerUrl=`http://localhost:4444/currentconditions/${cityKey}`
+	// const forcasts= `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${KEY}&metric=true`
+	// const forcastsServerUrl=`http://localhost:4444/forecasts/${cityKey}`
  
 
 	useEffect(()=>{
@@ -37,8 +52,8 @@ function App() {
 	},[])
 
 	console.log(favorites);
-	const setFromFavorites=(key)=>{
-		setCityKey(prev=> prev=key)
+	const setFromFavorites=(name)=>{
+		setCity(prev=> name)
 	}
 
 
@@ -87,7 +102,7 @@ function App() {
 
 
 	useEffect(() => {
-		fetch(`http://localhost:4444/autocomplete/${city}`)
+		fetch(`/autocomplete/${city}`)
 		.then(res => res.json())
 		.then(data => {
 			console.log(data[0]);
@@ -132,11 +147,14 @@ function App() {
 
 	useEffect(()=>{
 		
-		fetch(`http://localhost:4444/currentconditions/${cityKey}`)
+		fetch(`/currentconditions/${cityKey}`)
 		.then(res => res.json())
 		.then(data => {
 			console.log(data);
-			if (data[0]) {
+			if (!data || data.Code=='ServiceUnavailable') {
+				setCurrentData(undefinedData)
+			}
+			else {
 				let current = {
 					ID: cityKey,
 					cityName,
@@ -157,11 +175,6 @@ function App() {
 				localStorage.setItem(city, weatherData)
 				setCurrentData(current)
 			}
-			else {
-				const localData = localStorage.getItem(city)
-				
-				setCurrentData(prev => prev = JSON.parse(localData))
-			}
 
 		
 	})
@@ -174,16 +187,19 @@ function App() {
 
 
 	useEffect(() => {
-		fetch(`http://localhost:4444/forecasts/${cityKey}`)
+		fetch(`/forecasts/${cityKey}`)
 			.then(res => res.json())
 			.then((data) => {
 				console.log(data);
 				if (!data || data.Code=='ServiceUnavailable') {
-					const localData = localStorage.getItem(`${city}Forcasts`)
-					setFivDaysData([...JSON.parse(localData)])
-			
+					// const localData = localStorage.getItem(`${city}Forcasts`)
+					setFivDaysData(undefinedForcast)
+				
 				}
 				else {
+
+					
+					
 					const forcastArr = builForcast(data)
 					setFivDaysData([...forcastArr])
 					const forcasts = JSON.stringify(forcastArr)
